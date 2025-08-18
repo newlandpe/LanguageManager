@@ -96,7 +96,7 @@ class YourPlugin extends PluginBase implements Listener {
         $player = $event->getPlayer();
         $welcomeMessage = $this->getTranslatedMessage(
             $player,
-            "yourplugin.welcome.message",
+            "welcome.message",
             ["%player%" => $player->getName()]
         );
         $player->sendMessage($welcomeMessage);
