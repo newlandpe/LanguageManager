@@ -68,63 +68,52 @@ If you use an invalid locale for the filename, the server will not crash. Instea
 
 ## Integration with Other Plugins
 
-To use LanguageManager in your plugin, you should add it as a `softdepend` in your `plugin.yml`. This ensures your plugin loads after LanguageManager.
+This plugin provides a global translation scope for any plugin using the `libLanguage` virion. Your plugin does **not** need to depend on LanguageManager.
 
-The easiest way to get a translated message is by using the `getLocalizedMessage()` method from the `LanguageManager` plugin instance.
+The `libLanguage` API provides translation isolation between plugins, meaning you never have to worry about translation key conflicts. It will automatically use `LanguageManager`'s translations as a fallback if a translation is not found within your own plugin's scope.
 
-Here is an example of how to send a localized welcome message to a player when they join the server:
+Here is an example of how to use the API in your plugin:
 
 ```php
 <?php
 
 namespace YourPlugin;
 
-use ChernegaSergiy\LanguageManager\Main as LanguageManager;
-use pocketmine\command\CommandSender;
+use ChernegaSergiy\Language\Language;
+use ChernegaSergiy\Language\LanguageAPI;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 
 class YourPlugin extends PluginBase implements Listener {
 
     public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        
+        // It's good practice to register your languages in onEnable
+        $this->saveResource("languages/en_US.yml");
+        $enTranslations = (new Config($this->getDataFolder() . "languages/en_US.yml", Config::YAML))->getAll();
+        LanguageAPI::getInstance()->registerLanguage($this, new Language("en_US", $enTranslations));
     }
 
     public function onPlayerJoin(PlayerJoinEvent $event): void {
         $player = $event->getPlayer();
-        $welcomeMessage = $this->getTranslatedMessage(
+        
+        // Simply call the static method, passing your plugin instance ($this)
+        $welcomeMessage = LanguageAPI::getInstance()->localize(
+            $this, // Your plugin instance for scoping
             $player,
-            "welcome.message",
-            ["%player%" => $player->getName()]
+            "welcome.message", // The key for the translation
+            ["player" => $player->getName()] // Optional arguments
         );
+        
         $player->sendMessage($welcomeMessage);
-    }
-
-    /**
-     * @param CommandSender|null $sender
-     * @param string $key
-     * @param array $args
-     * @return string
-     */
-    public function getTranslatedMessage(?CommandSender $sender, string $key, array $args = []): string {
-        /** @var LanguageManager|null $languageManager */
-        $languageManager = $this->getServer()->getPluginManager()->getPlugin("LanguageManager");
-
-        if ($languageManager !== null && $languageManager->isEnabled()) {
-            return $languageManager->getLocalizedMessage($sender, $key, $args);
-        }
-
-        // Fallback if LanguageManager is not available
-        $message = $key;
-        foreach($args as $placeholder => $value) {
-            $message = str_replace($placeholder, (string)$value, $message);
-        }
-        return $message;
     }
 }
 ```
+
+As you can see, there is no need to check if `LanguageManager` is enabled or to write your own fallback logic. The `libLanguage` virion handles everything.
 
 ## Contributing
 

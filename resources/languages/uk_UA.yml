@@ -9,6 +9,7 @@ command.no_permission: "У вас немає дозволу на викорис�
 command.player_not_found: "Гравця %player% не знайдено."
 command.unknown_subcommand: "Невідома підкоманда: %subcommand%."
 
+command.help.header: "--- Довідка LanguageManager ---"
 command.help.description: "Показати цю довідку."
 command.reload.description: "Перезавантажує конфігурацію плагіна та мовні файли."
 command.setdefault.description: "Встановлює мову сервера за замовчуванням."
@@ -28,3 +29,8 @@ command.set.usage: "Використання: /langmanager set <гравець> 
 command.set.invalid_locale: "Недійсна локаль мови: %locale%."
 command.set.success: "Мову для %player% встановлено на %locale%."
 command.set.player_message: "Вашу мову встановлено на %locale% адміністратором."
+
+plugin.no_languages_loaded: "Мови не завантажено. Плагін вимкнено."
+plugin.default_language_not_found: "Мова за замовчуванням '%locale%' не знайдена. Використовується інша мова."
+plugin.default_language_fallback_en_us: "Використовується en_US."
+plugin.default_language_fallback_first_loaded: "Використовується перша завантажена мова: %locale%."
