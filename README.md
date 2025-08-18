@@ -11,7 +11,6 @@ A comprehensive language management plugin for PocketMine-MP, designed to provid
 - **API for Other Plugins:** Provides a robust API for other plugins to localize messages and access language data.
 - **Dynamic Language Switching:** Players can switch their preferred language on the fly.
 - **Extensible Design:** Built to be easily extended with new language sources or formats.
-
 - **Easy Configuration:** Simple `config.yml` for managing default language and other settings.
 
 ## Installation
@@ -76,7 +75,26 @@ use pocketmine\Server;
 
 class AnotherPlugin extends PluginBase {
 
-    private ?LanguageAPI $centralLanguageAPIolated instance if LanguageManager is not available
+    private ?LanguageAPI $centralLanguageAPI = null;
+
+    public function onEnable(): void {
+        $languageManagerPlugin = $this->getServer()->getPluginManager()->getPlugin("LanguageManager");
+
+        if ($languageManagerPlugin instanceof LanguageManagerPlugin) {
+            $this->centralLanguageAPI = $languageManagerPlugin::getLanguageAPI();
+            $this->getLogger()->info("Successfully hooked into LanguageManager as central language provider.");
+
+            // Now you can use $this->centralLanguageAPI to access languages managed by LanguageManager
+            $message = $this->centralLanguageAPI->localize(
+                $this->getServer()->getConsoleSender(),
+                "welcome.message",
+                ["%player%" => "Console"]
+            );
+            $this->getLogger()->info("Translated via central API: " . $message);
+
+        } else {
+            $this->getLogger()->warning("LanguageManager plugin not found or not enabled. Using isolated LanguageAPI instance.");
+            // Fallback to isolated instance if LanguageManager is not available
             $this->centralLanguageAPI = new LanguageAPI();
             // ... your own language setup for this plugin
         }
