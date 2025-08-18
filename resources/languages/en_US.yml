@@ -1,10 +1,30 @@
 welcome.message: "Welcome to the server!"
 greeting.player: "Hello, %player%!"
+
+plugin_enabled: "LanguageManager plugin enabled!"
+language.name: "English"
+
 command.player_only: "This command can only be used by players."
+command.no_permission: "You do not have permission to use this command."
+command.player_not_found: "Player %player% not found."
+command.unknown_subcommand: "Unknown subcommand: %subcommand%."
+
+command.help.description: "Show this help guide."
+command.reload.description: "Reloads the plugin's configuration and language files."
+command.setdefault.description: "Sets the default server language."
+command.set.description: "Sets a player's preferred language."
+
 command.setlang.usage: "Usage: /setlang <locale>"
 command.setlang.invalid_locale: "Invalid language locale: %locale%."
 command.setlang.success: "Your language has been set to %locale%."
 command.mylang.current: "Your current language is: %locale%."
 command.listlangs.header: "Available Languages:"
-language.name: "English"
-plugin_enabled: "LanguageManager plugin enabled!"
+
+command.setdefault.usage: "Usage: /langmanager setdefault <locale>"
+command.setdefault.invalid_locale: "Invalid language locale: %locale%."
+command.setdefault.success: "Default language set to %locale%."
+
+command.set.usage: "Usage: /langmanager set <player> <locale>"
+command.set.invalid_locale: "Invalid language locale: %locale%."
+command.set.success: "Language for %player% set to %locale%."
+command.set.player_message: "Your language has been set to %locale% by an administrator."

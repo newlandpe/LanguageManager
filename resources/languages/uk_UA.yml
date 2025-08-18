@@ -1,10 +1,30 @@
 welcome.message: "Ласкаво просимо на сервер!"
 greeting.player: "Привіт, %player%!"
+
+plugin_enabled: "Плагін LanguageManager увімкнено!"
+language.name: "Українська"
+
 command.player_only: "Цю команду можуть використовувати лише гравці."
+command.no_permission: "У вас немає дозволу на використання цієї команди."
+command.player_not_found: "Гравця %player% не знайдено."
+command.unknown_subcommand: "Невідома підкоманда: %subcommand%."
+
+command.help.description: "Показати цю довідку."
+command.reload.description: "Перезавантажує конфігурацію плагіна та мовні файли."
+command.setdefault.description: "Встановлює мову сервера за замовчуванням."
+command.set.description: "Встановлює бажану мову гравця."
+
 command.setlang.usage: "Використання: /setlang <локаль>"
 command.setlang.invalid_locale: "Недійсна локаль мови: %locale%."
 command.setlang.success: "Вашу мову встановлено на %locale%."
 command.mylang.current: "Ваша поточна мова: %locale%."
 command.listlangs.header: "Доступні мови:"
-language.name: "Українська"
-plugin_enabled: "Плагін LanguageManager увімкнено!"
+
+command.setdefault.usage: "Використання: /langmanager setdefault <локаль>"
+command.setdefault.invalid_locale: "Недійсна локаль мови: %locale%."
+command.setdefault.success: "Мову за замовчуванням встановлено на %locale%."
+
+command.set.usage: "Використання: /langmanager set <гравець> <локаль>"
+command.set.invalid_locale: "Недійсна локаль мови: %locale%."
+command.set.success: "Мову для %player% встановлено на %locale%."
+command.set.player_message: "Вашу мову встановлено на %locale% адміністратором."
