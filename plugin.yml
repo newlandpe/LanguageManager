@@ -34,7 +34,7 @@ permissions:
     default: true
   languagemanager.command.base:
     description: Allows usage of the /langmanager command.
-    default: op
+    default: true
   languagemanager.command.help:
     description: Allows usage of the /langmanager help command.
     default: true
@@ -50,3 +50,9 @@ permissions:
   languagemanager.command.admin:
     description: Allows usage of all /langmanager administrative commands.
     default: op
+    children:
+      languagemanager.command.help: true
+      languagemanager.command.reload: true
+      languagemanager.command.setdefault: true
+      languagemanager.command.set: true
+      languagemanager.command.base: true
