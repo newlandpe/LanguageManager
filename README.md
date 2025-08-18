@@ -2,7 +2,7 @@
 
 [![Poggit CI](https://poggit.pmmp.io/ci.shield/newlandpe/LanguageManager/LanguageManager)](https://poggit.pmmp.io/ci/newlandpe/LanguageManager/LanguageManager)
 
-A comprehensive language management plugin for PocketMine-MP, designed to provide a centralized and extensible solution for handling multi-language support across your server. This plugin allows other plugins to easily integrate and utilize a unified language system.
+A comprehensive language management plugin for PocketMine-MP, based on the [libLanguage](https://github.com/newlandpe/libLanguage) virion, designed to provide a centralized and extensible solution for handling multi-language support across your server. This plugin allows other plugins to easily integrate and utilize a unified language system.
 
 ## Features
 
