@@ -47,12 +47,3 @@ permissions:
   languagemanager.command.set:
     description: Allows usage of the /langmanager set command.
     default: op
-  languagemanager.command.admin:
-    description: Allows usage of all /langmanager administrative commands.
-    default: op
-    children:
-      languagemanager.command.help: true
-      languagemanager.command.reload: true
-      languagemanager.command.setdefault: true
-      languagemanager.command.set: true
-      languagemanager.command.base: true
