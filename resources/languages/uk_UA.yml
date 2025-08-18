@@ -1,7 +1,7 @@
 welcome.message: "Ласкаво просимо на сервер!"
 greeting.player: "Привіт, %player%!"
 
-plugin_enabled: "Плагін LanguageManager увімкнено!"
+plugin.enabled: "Плагін LanguageManager увімкнено!"
 language.name: "Українська"
 
 command.player_only: "Цю команду можуть використовувати лише гравці."

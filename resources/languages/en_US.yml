@@ -1,7 +1,7 @@
 welcome.message: "Welcome to the server!"
 greeting.player: "Hello, %player%!"
 
-plugin_enabled: "LanguageManager plugin enabled!"
+plugin.enabled: "LanguageManager plugin enabled!"
 language.name: "English"
 
 command.player_only: "This command can only be used by players."
