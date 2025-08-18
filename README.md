@@ -34,10 +34,12 @@ Language files are located in `plugin_data/LanguageManager/lang/`. You can modif
 
 Here are the commands available in LanguageManager:
 
+- `/setlang <locale>`: Set your preferred language.
+- `/mylang`: Show your current language.
+- `/listlangs`: List available languages.
 - `/langmanager help`: Show this help guide.
 - `/langmanager reload`: Reloads the plugin's configuration and language files.
 - `/langmanager setdefault <language_code>`: Sets the default server language.
-- `/langmanager list`: Lists all available languages.
 - `/langmanager set <player> <language_code>`: Sets a player's preferred language.
 
 ### Permissions
