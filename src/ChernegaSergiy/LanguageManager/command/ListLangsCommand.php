@@ -23,12 +23,12 @@ class ListLangsCommand extends Command implements PluginOwned {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$sender instanceof Player) {
-            $sender->sendMessage(TF::RED . $this->getPlugin()->getTranslator()->translateFor($sender, "command.player_only"));
+            $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.player_only"));
             return true;
         }
 
-        $sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslator()->translateFor($sender, "command.listlangs.header"));
-        $knownLocales = $this->getPlugin()->getLanguageHub()->getKnownLocales();
+        $sender->sendMessage(TF::GREEN . $this->plugin->getTranslator()->translateFor($sender, "command.listlangs.header"));
+        $knownLocales = $this->plugin->getLanguageHub()->getKnownLocales();
         foreach ($knownLocales as $locale) {
             $sender->sendMessage(TF::GREEN . "- " . $locale);
         }

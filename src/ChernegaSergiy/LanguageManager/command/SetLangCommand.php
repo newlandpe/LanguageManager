@@ -23,24 +23,24 @@ class SetLangCommand extends Command implements PluginOwned {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$sender instanceof Player) {
-            $sender->sendMessage(TF::RED . $this->getPlugin()->getTranslator()->translateFor($sender, "command.player_only"));
+            $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.player_only"));
             return true;
         }
 
         if (count($args) < 1) {
-            $sender->sendMessage(TF::RED . $this->getPlugin()->getTranslator()->translateFor($sender, "command.setlang.usage"));
+            $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.setlang.usage"));
             return true;
         }
 
         $newLocale = $args[0];
-        if (!in_array($newLocale, $this->getPlugin()->getLanguageHub()->getKnownLocales())) {
-            $sender->sendMessage(TF::RED . $this->getPlugin()->getTranslator()->translateFor($sender, "command.setlang.invalid_locale", ["locale" => $newLocale]));
+        if (!in_array($newLocale, $this->plugin->getLanguageHub()->getKnownLocales())) {
+            $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.setlang.invalid_locale", ["locale" => $newLocale]));
             return true;
         }
 
-        $this->getPlugin()->getPlayerLanguageConfig()->set($sender->getName(), $newLocale);
-        $this->getPlugin()->getPlayerLanguageConfig()->save();
-        $sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslator()->translateFor($sender, "command.setlang.success", ["locale" => $newLocale]));
+        $this->plugin->getPlayerLanguageConfig()->set($sender->getName(), $newLocale);
+        $this->plugin->getPlayerLanguageConfig()->save();
+        $sender->sendMessage(TF::GREEN . $this->plugin->getTranslator()->translateFor($sender, "command.setlang.success", ["locale" => $newLocale]));
         return true;
     }
 

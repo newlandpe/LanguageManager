@@ -23,12 +23,12 @@ class MyLangCommand extends Command implements PluginOwned {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$sender instanceof Player) {
-            $sender->sendMessage(TF::RED . $this->getPlugin()->getTranslator()->translateFor($sender, "command.player_only"));
+            $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.player_only"));
             return true;
         }
 
-        $locale = $this->getPlugin()->getPlayerLanguageConfig()->get($sender->getName(), $sender->getLocale());
-        $sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslator()->translateFor($sender, "command.mylang.current", ["locale" => $locale]));
+        $locale = $this->plugin->getPlayerLanguageConfig()->get($sender->getName(), $sender->getLocale());
+        $sender->sendMessage(TF::GREEN . $this->plugin->getTranslator()->translateFor($sender, "command.mylang.current", ["locale" => $locale]));
         return true;
     }
 
