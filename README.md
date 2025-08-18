@@ -44,10 +44,13 @@ Here are the commands available in LanguageManager:
 
 | Permission | Description | Default |
 | --- | --- | --- |
+| `languagemanager.command.setlang` | Allows players to set their language | `true` |
+| `languagemanager.command.mylang` | Allows players to view their current language | `true` |
+| `languagemanager.command.listlangs` | Allows players to list available languages | `true` |
+| `languagemanager.command.base` | Allows usage of the `/langmanager` command | `op` |
 | `languagemanager.command.help` | Allows usage of the `/langmanager help` command | `true` |
 | `languagemanager.command.reload` | Allows usage of the `/langmanager reload` command | `op` |
 | `languagemanager.command.setdefault` | Allows usage of the `/langmanager setdefault` command | `op` |
-| `languagemanager.command.list` | Allows usage of the `/langmanager list` command | `true` |
 | `languagemanager.command.set` | Allows usage of the `/langmanager set` command | `op` |
 | `languagemanager.command.admin` | Allows usage of all `/langmanager` administrative commands | `op` |
 
