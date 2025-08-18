@@ -8,6 +8,7 @@ use ChernegaSergiy\Language\Language;
 use ChernegaSergiy\Language\LanguageAPI;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\console\ConsoleCommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
@@ -43,7 +44,7 @@ class Main extends PluginBase {
             }
         }
 
-        $this->getLogger()->info($this->languageAPI->localize(Server::getInstance()->getConsoleSender(), "plugin_enabled"));
+        $this->getLogger()->info($this->languageAPI->localize(new ConsoleCommandSender(Server::getInstance(), Server::getInstance()->getLanguage()), "plugin_enabled"));
     }
 
     private function loadLanguages(): void {
