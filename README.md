@@ -55,49 +55,73 @@ Here are the commands available in LanguageManager:
 | `languagemanager.command.setdefault` | Allows usage of the `/langmanager setdefault` command | `op` |
 | `languagemanager.command.set` | Allows usage of the `/langmanager set` command | `op` |
 
+## Adding a New Language
+
+LanguageManager makes it easy to add new languages without needing to modify any code.
+
+1. **Create a Language File:** Create a new `.yml` file for your language. The filename **must** be a valid [Minecraft: Bedrock Edition locale code](https://wiki.bedrock.dev/text/text-intro#vanilla-languages) (e.g., `de_DE.yml` for German, `fr_FR.yml` for French).
+2. **Translate Messages:** Copy the contents from an existing language file (like `en_US.yml`) into your new file and translate all the messages.
+3. **Upload the File:** Place your new language file in the `plugin_data/LanguageManager/languages/` directory on your server.
+4. **Reload and Use:** Restart your server or use the `/langmanager reload` command. The new language will be automatically detected and made available for players to use with `/setlang <your_new_locale>`.
+
+If you use an invalid locale for the filename, the server will not crash. Instead, you will see a warning in the console, and the file will be skipped.
+
 ## Integration with Other Plugins
 
-If you want to use the `LanguageManager` plugin as a central source for language management across multiple plugins, you can access its `LanguageAPI` instance directly. This allows `LanguageManager` to manage a global set of languages that other plugins can utilize.
+To use LanguageManager in your plugin, you should add it as a `softdepend` in your `plugin.yml`. This ensures your plugin loads after LanguageManager.
 
-To do this, your plugin needs to:
-1. Add `LanguageManager` as a `softdepend` in its `plugin.yml`.
-2. Access the `LanguageManager` plugin instance and then its `LanguageAPI` via the static `getLanguageAPI()` method.
+The easiest way to get a translated message is by using the `getLocalizedMessage()` method from the `LanguageManager` plugin instance.
+
+Here is an example of how to send a localized welcome message to a player when they join the server:
 
 ```php
 <?php
 
-namespace AnotherPlugin;
+namespace YourPlugin;
 
-use ChernegaSergiy\LanguageManager\Main as LanguageManagerPlugin; // Alias the main class
-use ChernegaSergiy\Language\LanguageAPI;
+use ChernegaSergiy\LanguageManager\Main as LanguageManager;
+use pocketmine\command\CommandSender;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
-use pocketmine\Server;
 
-class AnotherPlugin extends PluginBase {
-
-    private ?LanguageAPI $centralLanguageAPI = null;
+class YourPlugin extends PluginBase implements Listener {
 
     public function onEnable(): void {
-        $languageManagerPlugin = $this->getServer()->getPluginManager()->getPlugin("LanguageManager");
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    }
 
-        if ($languageManagerPlugin instanceof LanguageManagerPlugin) {
-            $this->centralLanguageAPI = $languageManagerPlugin::getLanguageAPI();
-            $this->getLogger()->info("Successfully hooked into LanguageManager as central language provider.");
+    public function onPlayerJoin(PlayerJoinEvent $event): void {
+        $player = $event->getPlayer();
+        $welcomeMessage = $this->getTranslatedMessage(
+            $player,
+            "yourplugin.welcome.message",
+            ["%player%" => $player->getName()]
+        );
+        $player->sendMessage($welcomeMessage);
+    }
 
-            // Now you can use $this->centralLanguageAPI to access languages managed by LanguageManager
-            $message = $this->centralLanguageAPI->localize(
-                $this->getServer()->getConsoleSender(),
-                "welcome.message",
-                ["%player%" => "Console"]
-            );
-            $this->getLogger()->info("Translated via central API: " . $message);
+    /**
+     * @param CommandSender|null $sender
+     * @param string $key
+     * @param array $args
+     * @return string
+     */
+    public function getTranslatedMessage(?CommandSender $sender, string $key, array $args = []): string {
+        /** @var LanguageManager|null $languageManager */
+        $languageManager = $this->getServer()->getPluginManager()->getPlugin("LanguageManager");
 
-        } else {
-            $this->getLogger()->warning("LanguageManager plugin not found or not enabled. Using isolated LanguageAPI instance.");
-            // Fallback to isolated instance if LanguageManager is not available
-            $this->centralLanguageAPI = new LanguageAPI();
-            // ... your own language setup for this plugin
+        if ($languageManager !== null && $languageManager->isEnabled()) {
+            return $languageManager->getLocalizedMessage($sender, $key, $args);
         }
+
+        // Fallback if LanguageManager is not available
+        $message = $key;
+        foreach($args as $placeholder => $value) {
+            $message = str_replace($placeholder, (string)$value, $message);
+        }
+        return $message;
     }
 }
 ```
