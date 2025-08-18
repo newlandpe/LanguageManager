@@ -44,6 +44,26 @@ class LangManagerCommand extends Command implements PluginOwned {
                 $sender->sendMessage(TF::GREEN . $this->plugin->getTranslator()->translateFor($sender, "command.reload.success"));
                 break;
 
+            case "setdefault":
+                if (!$sender->hasPermission("languagemanager.command.setdefault")) {
+                    $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.no_permission"));
+                    return true;
+                }
+                if (count($args) < 1) {
+                    $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.setdefault.usage"));
+                    return true;
+                }
+                $newLocale = $args[0];
+                if (!in_array($newLocale, $this->plugin->getLanguageHub()->getKnownLocales())) {
+                    $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.setdefault.invalid_locale", ["locale" => $newLocale]));
+                    return true;
+                }
+                $this->plugin->getConfig()->set("default-language", $newLocale);
+                $this->plugin->getConfig()->save();
+                $this->plugin->getLanguageHub()->setDefaultLocale($this->plugin, $newLocale); // Set default locale in LanguageHub
+                $sender->sendMessage(TF::GREEN . $this->plugin->getTranslator()->translateFor($sender, "command.setdefault.success", ["locale" => $newLocale]));
+                break;
+
             case "set":
                 if (!$sender->hasPermission("languagemanager.command.set")) {
                     $sender->sendMessage(TF::RED . $this->plugin->getTranslator()->translateFor($sender, "command.no_permission"));
