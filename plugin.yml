@@ -1,0 +1,52 @@
+name: LanguageManager
+main: ChernegaSergiy\LanguageManager\Main
+version: 1.0.0
+api: 5.0.0
+description: A powerful language management plugin built with the libLanguage virion, offering robust localization features.
+author: ChernegaSergiy
+
+commands:
+  setlang:
+    description: Set your preferred language.
+    usage: "/setlang <locale>"
+    permission: languagemanager.command.setlang
+  mylang:
+    description: Show your current language.
+    usage: "/mylang"
+    permission: languagemanager.command.mylang
+  listlangs:
+    description: List available languages.
+    usage: "/listlangs"
+    permission: languagemanager.command.listlangs
+  langmanager:
+    description: Main command for LanguageManager plugin.
+    usage: "/langmanager <subcommand> [args]"
+    permission: languagemanager.command.base
+permissions:
+  languagemanager.command.setlang:
+    description: Allows players to set their language.
+    default: true
+  languagemanager.command.mylang:
+    description: Allows players to view their current language.
+    default: true
+  languagemanager.command.listlangs:
+    description: Allows players to list available languages.
+    default: true
+  languagemanager.command.base:
+    description: Allows usage of the /langmanager command.
+    default: op
+  languagemanager.command.help:
+    description: Allows usage of the /langmanager help command.
+    default: true
+  languagemanager.command.reload:
+    description: Allows usage of the /langmanager reload command.
+    default: op
+  languagemanager.command.setdefault:
+    description: Allows usage of the /langmanager setdefault command.
+    default: op
+  languagemanager.command.set:
+    description: Allows usage of the /langmanager set command.
+    default: op
+  languagemanager.command.admin:
+    description: Allows usage of all /langmanager administrative commands.
+    default: op
